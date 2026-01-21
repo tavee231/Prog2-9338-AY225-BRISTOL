@@ -1,115 +1,197 @@
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class AttendanceChecker {
 
-    private static ArrayList<String> attendanceList = new ArrayList<>();
+    private static HashSet<String> nameSet = new HashSet<>();
+    private static DefaultTableModel tableModel;
 
     public static void main(String[] args) {
-    
+
         JFrame frame = new JFrame("Attendance Tracker");
-        frame.setSize(400, 400);  
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-        frame.setLocationRelativeTo(null); 
+        frame.setSize(800, 550);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+        frame.setLayout(new BorderLayout(10, 10));
 
-        JLabel nameLabel = new JLabel("Attendance Name:");
-        JTextField nameField = new JTextField();
+        // ================= FORM PANEL =================
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel courseLabel = new JLabel("Course / Year:");
-        JTextField courseField = new JTextField();
+        JTextField nameField = new JTextField(18);
+        JTextField courseField = new JTextField(18);
 
-        JLabel timeLabel = new JLabel("Time In:");
-        JTextField timeField = new JTextField();
+        JTextField timeField = new JTextField(18);
+        timeField.setEditable(false);
 
-        JLabel signatureLabel = new JLabel("E-Signature:");
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        timeField.setText(LocalDateTime.now().format(formatter));
 
         SignaturePanel signaturePanel = new SignaturePanel();
 
-        panel.add(nameLabel);
-        panel.add(nameField);
-        panel.add(courseLabel);
-        panel.add(courseField);
-        panel.add(timeLabel);
-        panel.add(timeField);
-        panel.add(signatureLabel);
-        panel.add(signaturePanel); 
+        JButton submitBtn = new JButton("Submit");
+        JButton clearSigBtn = new JButton("Clear Signature");
+        JButton resetBtn = new JButton("Reset Attendance");
+        JButton exitBtn = new JButton("Exit");
 
-        frame.add(panel, BorderLayout.CENTER);
+        // ---- Layout form ----
+        gbc.gridx = 0; gbc.gridy = 0;
+        formPanel.add(new JLabel("Name:"), gbc);
+        gbc.gridx = 1;
+        formPanel.add(nameField, gbc);
 
-        JButton submitButton = new JButton("Submit");
-        JButton exitButton = new JButton("Exit");
+        gbc.gridx = 0; gbc.gridy = 1;
+        formPanel.add(new JLabel("Course / Year:"), gbc);
+        gbc.gridx = 1;
+        formPanel.add(courseField, gbc);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(submitButton);
-        buttonPanel.add(exitButton);
-        frame.add(buttonPanel, BorderLayout.SOUTH);
+        gbc.gridx = 0; gbc.gridy = 2;
+        formPanel.add(new JLabel("Time In:"), gbc);
+        gbc.gridx = 1;
+        formPanel.add(timeField, gbc);
 
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-        
-                String name = nameField.getText().trim();
-                String course = courseField.getText().trim();
-                String timeIn = timeField.getText().trim();
-                Image signatureImage = signaturePanel.getSignatureImage();
+        gbc.gridx = 0; gbc.gridy = 3;
+        formPanel.add(new JLabel("E-Signature:"), gbc);
+        gbc.gridx = 1;
+        formPanel.add(signaturePanel, gbc);
 
-                if (name.isEmpty() || course.isEmpty() || timeIn.isEmpty() || signatureImage == null) {
-                    JOptionPane.showMessageDialog(frame, "Please fill in all fields and provide an e-signature.", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-             
-                    String attendanceInfo = "Name: " + name + "\nCourse/Year: " + course + "\nTime In: " + timeIn + "\nE-Signature: Signature Provided";
-                    
-                    attendanceList.add(attendanceInfo);
+        gbc.gridx = 1; gbc.gridy = 4;
+        formPanel.add(clearSigBtn, gbc);
 
-                    JOptionPane.showMessageDialog(frame, "Attendance Submitted:\n"
-                            + attendanceInfo);
+        JPanel btnPanel = new JPanel();
+        btnPanel.add(submitBtn);
+        btnPanel.add(resetBtn);
+        btnPanel.add(exitBtn);
 
+        gbc.gridx = 1; gbc.gridy = 5;
+        formPanel.add(btnPanel, gbc);
 
-                    showAttendanceList();
-                }
+        // ================= TABLE PANEL =================
+        String[] columns = {"Name", "Course / Year", "Time In"};
+        tableModel = new DefaultTableModel(columns, 0);
+        JTable table = new JTable(tableModel);
+        table.setEnabled(false);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Attendance Records"));
+
+        // ================= ADD TO FRAME =================
+        frame.add(formPanel, BorderLayout.WEST);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        // ================= ACTIONS =================
+        clearSigBtn.addActionListener(e -> signaturePanel.clear());
+
+        submitBtn.addActionListener(e -> {
+            String name = nameField.getText().trim();
+            String course = courseField.getText().trim();
+            String timeIn = timeField.getText();
+
+            if (name.isEmpty() || course.isEmpty() || !signaturePanel.hasSignature()) {
+                JOptionPane.showMessageDialog(frame,
+                        "Complete all fields and sign.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (nameSet.contains(name.toLowerCase())) {
+                JOptionPane.showMessageDialog(frame,
+                        "This name already exists.",
+                        "Duplicate",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            nameSet.add(name.toLowerCase());
+
+            // Add to table
+            tableModel.addRow(new Object[]{name, course, timeIn});
+
+            saveToFiles(name, course, timeIn);
+
+            JOptionPane.showMessageDialog(frame, "Attendance recorded!");
+
+            // Reset fields
+            nameField.setText("");
+            courseField.setText("");
+            signaturePanel.clear();
+            timeField.setText(LocalDateTime.now().format(formatter));
+        });
+
+        resetBtn.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Are you sure you want to reset the attendance list?",
+                    "Confirm Reset",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                tableModel.setRowCount(0);
+                nameSet.clear();
+                JOptionPane.showMessageDialog(frame, "Attendance list reset.");
             }
         });
 
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();  
-            }
-        });
+        exitBtn.addActionListener(e -> frame.dispose());
 
         frame.setVisible(true);
     }
 
+    // ================= FILE SAVE =================
+    private static void saveToFiles(String name, String course, String time) {
+        try (FileWriter txt = new FileWriter("attendance.txt", true);
+             FileWriter csv = new FileWriter("attendance.csv", true)) {
+
+            txt.write("Name: " + name + "\nCourse: " + course +
+                    "\nTime In: " + time + "\n\n");
+            csv.write(name + "," + course + "," + time + "\n");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    // ================= SIGNATURE PANEL =================
     static class SignaturePanel extends JPanel {
         private BufferedImage image;
         private Graphics2D g2d;
-        private int x1, y1, x2, y2;
+        private boolean signed = false;
+        private int x1, y1;
 
         public SignaturePanel() {
-    
             setPreferredSize(new Dimension(300, 100));
+            setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
             image = new BufferedImage(300, 100, BufferedImage.TYPE_INT_ARGB);
             g2d = image.createGraphics();
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2d.setColor(Color.BLACK);
             g2d.setStroke(new BasicStroke(2));
+            g2d.setColor(Color.BLACK);
 
             addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent e) {
                     x1 = e.getX();
                     y1 = e.getY();
+                    signed = true;
                 }
             });
 
             addMouseMotionListener(new MouseAdapter() {
                 public void mouseDragged(MouseEvent e) {
-                    x2 = e.getX();
-                    y2 = e.getY();
+                    int x2 = e.getX();
+                    int y2 = e.getY();
                     g2d.drawLine(x1, y1, x2, y2);
                     x1 = x2;
                     y1 = y2;
@@ -118,22 +200,21 @@ public class AttendanceChecker {
             });
         }
 
-        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(image, 0, 0, null);
         }
 
-        public Image getSignatureImage() {
-            return image.getWidth() == 0 || image.getHeight() == 0 ? null : image;
+        public void clear() {
+            g2d.setComposite(AlphaComposite.Clear);
+            g2d.fillRect(0, 0, image.getWidth(), image.getHeight());
+            g2d.setComposite(AlphaComposite.SrcOver);
+            signed = false;
+            repaint();
         }
-    }
 
-    private static void showAttendanceList() {
-        StringBuilder listBuilder = new StringBuilder("Attendance List:\n\n");
-        for (String record : attendanceList) {
-            listBuilder.append(record).append("\n\n");
+        public boolean hasSignature() {
+            return signed;
         }
-        JOptionPane.showMessageDialog(null, listBuilder.toString(), "Attendance List", JOptionPane.INFORMATION_MESSAGE);
     }
 }
