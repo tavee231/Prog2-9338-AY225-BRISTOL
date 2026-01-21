@@ -1,4 +1,5 @@
-//Author: Bristol
+package PRELIMLAB1;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -10,7 +11,7 @@ import java.util.HashSet;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class AttendanceChecker {
+public class AttendanceCheckerBristol {
 
     private static HashSet<String> nameSet = new HashSet<>();
     private static DefaultTableModel tableModel;
@@ -18,7 +19,7 @@ public class AttendanceChecker {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Attendance Tracker");
-        frame.setSize(800, 550);
+        frame.setSize(900, 550);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -81,9 +82,16 @@ public class AttendanceChecker {
         formPanel.add(btnPanel, gbc);
 
         // ================= TABLE PANEL =================
-        String[] columns = {"Name", "Course / Year", "Time In"};
-        tableModel = new DefaultTableModel(columns, 0);
+        String[] columns = {"Name", "Course / Year", "Time In", "Signature"};
+        tableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (column == 3) return ImageIcon.class; // Signature column
+                return String.class;
+            }
+        };
         JTable table = new JTable(tableModel);
+        table.setRowHeight(60); // Make room for signature thumbnail
         table.setEnabled(false);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Attendance Records"));
@@ -118,9 +126,18 @@ public class AttendanceChecker {
 
             nameSet.add(name.toLowerCase());
 
-            // Add to table
-            tableModel.addRow(new Object[]{name, course, timeIn});
+            // Save signature as PNG
+            String fileName = name.replaceAll("\\s+", "_") + "_signature.png";
+            saveSignature(signaturePanel, fileName);
 
+            // Create thumbnail for table
+            ImageIcon signatureIcon = new ImageIcon(new ImageIcon(fileName)
+                    .getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH));
+
+            // Add to table
+            tableModel.addRow(new Object[]{name, course, timeIn, signatureIcon});
+
+            // Save to text/csv files
             saveToFiles(name, course, timeIn);
 
             JOptionPane.showMessageDialog(frame, "Attendance recorded!");
@@ -160,6 +177,20 @@ public class AttendanceChecker {
                     "\nTime In: " + time + "\n\n");
             csv.write(name + "," + course + "," + time + "\n");
 
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    // ================= SAVE SIGNATURE =================
+    private static void saveSignature(SignaturePanel panel, String fileName) {
+        try {
+            BufferedImage image = new BufferedImage(
+                    panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = image.createGraphics();
+            panel.paint(g2d);
+            g2d.dispose();
+            javax.imageio.ImageIO.write(image, "png", new java.io.File(fileName));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
