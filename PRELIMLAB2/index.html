@@ -2,23 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bristoless Lab 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bristoless Lab 2 - Azure System</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000b1a; font-family: 'Courier New', monospace; color: #00d4ff; }
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            overflow: hidden; background: #000b1a; 
+            font-family: 'Courier New', monospace; color: #00d4ff; 
+        }
+
         #matrixCanvas { position: fixed; top: 0; left: 0; z-index: -1; }
-        
+
         nav { 
             background: rgba(0, 20, 40, 0.9); border-bottom: 2px solid #00d4ff; 
-            padding: 15px; display: flex; justify-content: center; gap: 30px; position: relative; z-index: 10;
+            padding: 15px; display: flex; justify-content: center; gap: 30px; 
+            position: relative; z-index: 10;
         }
-        nav a { color: #00d4ff; text-decoration: none; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #00d4ff; }
+
+        nav a { 
+            color: #00d4ff; text-decoration: none; font-weight: bold; 
+            cursor: pointer; text-shadow: 0 0 8px #00d4ff; 
+        }
+
         nav a:hover { color: #fff; }
 
         .page { 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             height: calc(100vh - 60px); width: 100%; position: absolute; transition: 0.5s; 
         }
-        
+
         .panel { 
             background: rgba(0, 15, 30, 0.95); border: 2px solid #00d4ff; padding: 40px; 
             border-radius: 15px; box-shadow: 0 0 30px #00d4ff; width: 400px; text-align: center; 
@@ -27,16 +39,33 @@
         .hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
         .active { opacity: 1; pointer-events: auto; transform: scale(1); }
 
-        input { background: #001a33; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; margin: 10px 0; width: 90%; outline: none; }
-        button { background: #00d4ff; color: #000; border: none; padding: 12px; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; transition: 0.2s; }
+        input { 
+            background: #001a33; border: 1px solid #00d4ff; color: #00d4ff; 
+            padding: 12px; margin: 10px 0; width: 90%; outline: none; 
+        }
+
+        button { 
+            background: #00d4ff; color: #000; border: none; padding: 12px; 
+            font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; transition: 0.2s; 
+        }
+
         button:hover { background: #fff; box-shadow: 0 0 15px #fff; }
-        
-        .history-table { width: 100%; max-height: 400px; overflow-y: auto; border: 1px solid #004d66; background: rgba(0, 10, 20, 0.8); }
-        .log-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid #004d66; padding: 10px; font-size: 0.8em; }
+
+        .history-table { 
+            width: 100%; max-height: 400px; overflow-y: auto; 
+            border: 1px solid #004d66; background: rgba(0, 10, 20, 0.8); 
+        }
+
+        .log-row { 
+            display: grid; grid-template-columns: 1fr 1fr 1fr; 
+            border-bottom: 1px solid #004d66; padding: 10px; font-size: 0.8em; 
+        }
+
         .header-row { background: #00334d; font-weight: bold; }
     </style>
 </head>
 <body>
+
     <canvas id="matrixCanvas"></canvas>
 
     <nav>
