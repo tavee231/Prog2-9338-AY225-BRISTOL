@@ -1,0 +1,126 @@
+/* General Page Layout */
+body {
+    background-color: #e0e5ec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+}
+
+/* Main Calculator Container */
+.calculator-body {
+    background-color: #333;
+    width: 350px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 15px 15px 30px #a3b1c6, -5px -5px 15px #ffffff20;
+    border: 2px solid #555;
+}
+
+/* Brand Header & Solar Panel */
+.brand {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.solar-panel {
+    width: 60px;
+    height: 20px;
+    background: linear-gradient(to bottom, #442222, #221111);
+    border: 1px solid #553333;
+    border-radius: 4px;
+}
+
+/* LCD Display Area */
+.lcd-screen {
+    background-color: #9ea792; /* Classic calculator green */
+    color: #222;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 140px;
+    border: 4px inset #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.placeholder {
+    opacity: 0.5;
+    font-style: italic;
+}
+
+/* Grid for Inputs */
+.input-pad {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    color: #bbb;
+    font-size: 10px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: #eee;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+/* Action Buttons */
+.button-row {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+.btn-calc {
+    background-color: #ff9f43;
+    color: white;
+    box-shadow: 0 4px #e58e3c;
+}
+
+.btn-clear {
+    background-color: #ef5777;
+    color: white;
+    max-width: 80px;
+    box-shadow: 0 4px #d94e6b;
+}

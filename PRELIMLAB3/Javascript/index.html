@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prelim Grade Calculator</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator-body">
+        <div class="brand">
+            <span>CASIO</span> GRADE-FX
+            <div class="solar-panel"></div>
+        </div>
+
+        <div class="lcd-screen" id="display-screen">
+            <span class="placeholder">Ready for calculation...<br>Enter grades below.</span>
+        </div>
+
+        <div class="input-pad">
+            <div class="input-group"><label>Attendance</label><input type="number" id="attendance"></div>
+            <div class="input-group"><label>Lab Work 1</label><input type="number" id="lab1"></div>
+            <div class="input-group"><label>Lab Work 2</label><input type="number" id="lab2"></div>
+            <div class="input-group"><label>Lab Work 3</label><input type="number" id="lab3"></div>
+        </div>
+
+        <div class="button-row">
+            <button class="btn-clear" onclick="clearCalculator()">AC</button>
+            <button class="btn-calc" onclick="calculatePrelim()">CALCULATE</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
