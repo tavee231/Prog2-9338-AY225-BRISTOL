@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records Excel - [Bristol, Steven Jandrei M.] [25-2154-508]</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="excel-window">
+        <header>
+            <div class="title-bar">Student_Database_2026.xlsx - Excel</div>
+            <div class="user-info">
+                <strong>Programmer:</strong> [Bristol, Steven Jandrei M.] | <strong>ID:</strong> [25-2154-508]
+            </div>
+        </header>
+
+        <div class="formula-bar">
+            <div class="fx-icon">fx</div>
+            <input type="text" id="idInput" placeholder="Enter ID (e.g. 1.25E+08)">
+            <input type="text" id="nameInput" placeholder="Enter Student Name">
+            <input type="number" id="gradeInput" placeholder="Enter Grade">
+            <button class="add-btn" onclick="addStudentManual()">Insert Record</button>
+        </div>
+
+        <div class="sheet-area">
+            <table id="studentTable">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"></th> <th>A | Student ID</th>
+                        <th>B | Full Name</th>
+                        <th>C | Grade (%)</th>
+                        <th>D | Status</th>
+                        <th style="width: 100px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <div class="tab-strip">
+                <div class="tab active">Student_Records</div>
+            </div>
+            <div class="programmer-tag">
+                Programmer Identifier: [Bristol, Steven Jandrei M.] [25-2154-508]
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
