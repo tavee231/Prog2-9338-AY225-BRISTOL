@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Programming 2 Machine Problems - CSV Dataset Processing</title>
+
+<style>
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:40px;
+    background:#f4f6f9;
+}
+
+h1{
+    text-align:center;
+}
+
+h2{
+    margin-top:40px;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+table{
+    border-collapse:collapse;
+    width:100%;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:left;
+}
+
+th{
+    background:#2c3e50;
+    color:white;
+}
+
+.instructions{
+    background:#eef3ff;
+    padding:15px;
+    border-left:5px solid #3a66d6;
+    margin-bottom:20px;
+}
+
+.machine{
+    background:#f7f7f7;
+    padding:10px;
+    margin:5px 0;
+}
+
+.footer{
+    margin-top:40px;
+    font-size:13px;
+    text-align:center;
+    color:gray;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Programming 2 Machine Problem Set</h1>
+<h3>Java and JavaScript CSV Dataset Processing</h3>
+
+<p>
+Students will create programs that process the provided CSV dataset located in this repository.
+Each student must complete <b>three (3) assigned machine problems</b>.
+Programs must be implemented using both <b>Java</b> and <b>JavaScript</b>.
+</p>
+
+<h2>General Instructions</h2>
+
+<div class="instructions">
+
+<ol>
+
+<li>Pull this repository from Git.</li>
+
+<li>Locate the dataset file provided in the repository.</li>
+
+<li>Your program must FIRST ask the user to enter the dataset file path before executing any processing.</li>
+
+<li>All machine problems must be implemented in:
+<ul>
+<li>Java</li>
+<li>JavaScript</li>
+</ul>
+</li>
+
+<li>Programs must correctly read and parse CSV data.</li>
+
+<li>Each program must contain clear comments explaining:
+<ul>
+<li>Variables</li>
+<li>Functions</li>
+<li>Processing logic</li>
+<li>Dataset handling</li>
+</ul>
+</li>
+
+<li>Comments are required to help the instructor evaluate the code.</li>
+
+<li>Output must be clearly formatted and readable.</li>
+
+<li>Each submission must include:
+<ul>
+<li>Source code</li>
+<li>Screenshot of program output</li>
+<li>Short explanation of the program logic (3–5 sentences)</li>
+</ul>
+</li>
+
+</ol>
+
+</div>
+
+<h2>Java Program Flow</h2>
+
+<ol>
+
+<li>Start Program</li>
+<li>Prompt user for dataset file path</li>
+<li>Read CSV using BufferedReader and FileReader</li>
+<li>Store records using ArrayList or objects</li>
+<li>Process dataset depending on machine problem</li>
+<li>Display formatted output</li>
+<li>Handle errors (missing file, invalid data)</li>
+<li>End Program</li>
+
+</ol>
+
+<h2>JavaScript Program Flow</h2>
+
+<ol>
+
+<li>Start Program</li>
+<li>Prompt user for dataset location</li>
+<li>Read file using Node.js File System module</li>
+<li>Parse CSV data into arrays or objects</li>
+<li>Process dataset based on machine problem</li>
+<li>Display formatted results</li>
+<li>Handle possible errors</li>
+<li>End Program</li>
+
+</ol>
+
+<h2>Machine Problems</h2>
+
+<div class="machine"><b>MP01</b> – Load dataset and display total number of records.</div>
+<div class="machine"><b>MP02</b> – Display the first 10 rows of the dataset.</div>
+<div class="machine"><b>MP03</b> – Search for a keyword in the dataset.</div>
+<div class="machine"><b>MP04</b> – Count valid rows excluding empty rows.</div>
+<div class="machine"><b>MP05</b> – Extract and display a selected column.</div>
+<div class="machine"><b>MP06</b> – Display unique values in a column.</div>
+<div class="machine"><b>MP07</b> – Sort records alphabetically by a column.</div>
+<div class="machine"><b>MP08</b> – Filter records using a keyword.</div>
+<div class="machine"><b>MP09</b> – Display dataset statistics.</div>
+<div class="machine"><b>MP10</b> – Detect duplicate records.</div>
+<div class="machine"><b>MP11</b> – Frequency count for column values.</div>
+<div class="machine"><b>MP12</b> – Display dataset in formatted table output.</div>
+<div class="machine"><b>MP13</b> – Detect rows with missing values.</div>
+<div class="machine"><b>MP14</b> – Count keyword occurrences.</div>
+<div class="machine"><b>MP15</b> – Export first 50 rows to a new CSV file.</div>
+<div class="machine"><b>MP16</b> – Randomly display 10 rows from dataset.</div>
+<div class="machine"><b>MP17</b> – Find the longest text entry in dataset.</div>
+<div class="machine"><b>MP18</b> – Remove rows with empty fields.</div>
+<div class="machine"><b>MP19</b> – Generate dataset summary report.</div>
+<div class="machine"><b>MP20</b> – Convert CSV dataset into JSON format.</div>
+
+<h2>Student Machine Problem Assignments</h2>
+
+<table>
+
+<tr>
+<th>Student</th>
+<th>Assigned Machine Problems</th>
+</tr>
+
+<!-- Each student is assigned 3 machine problems in a randomized, non-sequential pattern -->
+<tr><td>ALONZO, TRISHA MAE V.</td><td>MP07, MP14, MP20</td></tr>
+<tr><td>BOÑULA, KENT JOHN C.</td><td>MP02, MP11, MP18</td></tr>
+<tr><td>BRISTOL, STEVEN JANDREI M.</td><td>MP05, MP09, MP16</td></tr>
+<tr><td>COLOMA, AYSBERG MATT A.</td><td>MP01, MP13, MP19</td></tr>
+<tr><td>COROCOTO, JOHN CARLOS V.</td><td>MP03, MP08, MP15</td></tr>
+<tr><td>DIG, KARINA CASSANDRA M.</td><td>MP06, MP12, MP17</td></tr>
+<tr><td>DORIO, RAPHAEL LOUIS P.</td><td>MP04, MP10, MP20</td></tr>
+<tr><td>FLORES, JOHN ACEIORD R.</td><td>MP02, MP07, MP14</td></tr>
+<tr><td>FRANCIA, JUSTINE WAYNE S.</td><td>MP05, MP11, MP18</td></tr>
+<tr><td>GONZALES, NORMAN JR. S.</td><td>MP01, MP08, MP16</td></tr>
+<tr><td>HARDER, SIEGFRID FRANKLIN</td><td>MP03, MP13, MP19</td></tr>
+<tr><td>IGNA, PRINCE RAM ROYDLIKENT F.</td><td>MP06, MP09, MP15</td></tr>
+<tr><td>INDONILLA, RHENZ A.</td><td>MP04, MP12, MP17</td></tr>
+<tr><td>JADULOS, FRITZGERALD JOSEPH S.</td><td>MP02, MP10, MP20</td></tr>
+<tr><td>PABLO, CHRISTEL JEAN C.</td><td>MP05, MP07, MP13</td></tr>
+<tr><td>PEGA, LORD CLYDE W.</td><td>MP01, MP11, MP19</td></tr>
+<tr><td>SILAVA, MARK EDCEL N.</td><td>MP03, MP08, MP14</td></tr>
+<tr><td>TAYLO, CLARK KENNETH C.</td><td>MP06, MP15, MP18</td></tr>
+<tr><td>VESINA, ISAIAH GODFREY C.</td><td>MP04, MP09, MP16</td></tr>
+
+</table>
+
+<div class="footer">
+Programming 2 Laboratory Requirement • University of Perpetual Help System DALTA Molino Campus
+</div>
+
+</div>
+
+</body>
+</html>
